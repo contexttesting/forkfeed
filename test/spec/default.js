@@ -1,22 +1,81 @@
-import { equal, ok } from 'zoroaster/assert'
-import Context from '../context'
-import forkfeed from '../../src'
+import { equal } from 'assert'
+import { Readable } from 'stream'
+import Catchment from 'catchment'
+import forkFeed from '../../src'
 
-/** @type {Object.<string, (c: Context)>} */
-const T = {
-  context: Context,
-  'is a function'() {
-    equal(typeof forkfeed, 'function')
-  },
-  async 'calls package without error'() {
-    await forkfeed()
-  },
-  async 'gets a link to the fixture'({ FIXTURE }) {
-    const res = await forkfeed({
-      text: FIXTURE,
+const ts = {
+  async 'can setup answers'() {
+    const rs = new Readable({
+      read() {
+        this.push('data: ')
+        this.push('world: ')
+        this.push(null)
+      },
     })
-    ok(res, FIXTURE)
+    const c = new Catchment()
+    const l = new Catchment()
+    forkFeed(rs, c, [
+      [/data/, 'ok data'],
+      [/world/, 'hello data'],
+    ], l)
+    rs.on('end', () => {
+      c.end()
+      l.end()
+    })
+    const cRes = await c.promise
+    const lRes = await l.promise
+    equal(cRes, `ok data
+hello data
+`)
+    equal(lRes, `data: ok data
+world: hello data
+`)
+  },
+  async 'can setup answers without log'() {
+    const rs = new Readable({
+      read() {
+        this.push('data: ')
+        this.push('world: ')
+        this.push(null)
+      },
+    })
+    const c = new Catchment()
+    forkFeed(rs, c, [
+      [/data/, 'ok data'],
+      [/world/, 'hello data'],
+    ])
+    rs.on('end', () => {
+      c.end()
+    })
+    const cRes = await c.promise
+    equal(cRes, `ok data
+hello data
+`)
+  },
+  async 'works when answers are exhausted'() {
+    const rs = new Readable({
+      read() {
+        this.push('data: ')
+        this.push('thank you.')
+        this.push(null)
+      },
+    })
+    const c = new Catchment()
+    const l = new Catchment()
+    forkFeed(rs, c, [
+      [/data/, 'ok data'],
+    ], l)
+    rs.on('end', () => {
+      c.end()
+      l.end()
+    })
+    const cRes = await c.promise
+    const lRes = await l.promise
+    equal(cRes, `ok data
+`)
+    equal(lRes, `data: ok data
+thank you.`)
   },
 }
 
-export default T
+export default ts

@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/forkfeed.svg)](https://npmjs.org/package/forkfeed)
 
-`forkfeed` is Passes answer values to a child process on data.
+`forkfeed` is a function that passes answer values to a child process on data. For example, if a fork was spawned which requires user interaction, this module can be used to pass answers to it according to the seen data from `stdout`.
 
 ```sh
 yarn add -E forkfeed
@@ -12,8 +12,7 @@ yarn add -E forkfeed
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`forkfeed(arg1: string, arg2?: boolean)`](#mynewpackagearg1-stringarg2-boolean-void)
-  * [`Config`](#type-config)
+- [`forkFeed(readable: Readable, stdin: Writable, inputs: [RegExp, string][], log: Writable)`](#forkfeedreadable-readablestdin-writableinputs-regexp-stringlog-writable-void)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
@@ -23,35 +22,57 @@ yarn add -E forkfeed
 The package is available by importing its default function:
 
 ```js
-import forkfeed from 'forkfeed'
+import forkFeed from 'forkfeed'
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
-## `forkfeed(`<br/>&nbsp;&nbsp;`arg1: string,`<br/>&nbsp;&nbsp;`arg2?: boolean,`<br/>`): void`
+## `forkFeed(`<br/>&nbsp;&nbsp;`readable: Readable,`<br/>&nbsp;&nbsp;`stdin: Writable,`<br/>&nbsp;&nbsp;`inputs: [RegExp, string][],`<br/>&nbsp;&nbsp;`log: Writable,`<br/>`): void`
 
-Call this function to get the result you want.
+Sets up a listener on the _Readable_ stream and writes answers to the _Writable_ stream when data specified in `inputs` was detected. The logging stream will receive both data and answers.
 
-__<a name="type-config">`Config`</a>__: Options for the program.
+`import('stream').Writable` __<a name="type-writable">`Writable`</a>__
 
-|   Name    |   Type    |    Description    | Default |
-| --------- | --------- | ----------------- | ------- |
-| shouldRun | _boolean_ | A boolean option. | `true`  |
-| __text*__ | _string_  | A text to return. | -       |
+`import('stream').Readable` __<a name="type-readable">`Readable`</a>__
+
+Given a fork source code as
+
+```js
+const rl = require('readline')
+
+const i = rl.createInterface({
+  input: process.stdin,
+  output: process.stderr,
+})
+i.question(
+  'What was the football coach yelling at the vending machine?\n> ',
+  () => {
+    i.question('What do snowmen do in their spare time?\n> ', () => {
+      process.exit(1)
+    })
+  })
+```
+
+The function can be used in the following manner:
 
 ```js
 /* yarn example/ */
-import forkfeed from 'forkfeed'
+import forkFeed from 'forkFeed'
+import { fork } from 'child_process'
 
 (async () => {
-  const res = await forkfeed({
-    text: 'example',
-  })
-  console.log(res)
+  const cp = fork('example/fork', [], { stdio: 'pipe' })
+  forkFeed(cp.stderr, cp.stdin, [
+    [/coach/, 'Gimme my quarter back!!!'],
+    [/snowmen/, 'Just chilling.'],
+  ], process.stdout)
 })()
 ```
 ```
-example
+What was the football coach yelling at the vending machine?
+> Gimme my quarter back!!!
+What do snowmen do in their spare time?
+> Just chilling.
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>

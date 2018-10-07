@@ -1,9 +1,11 @@
 /* yarn example/ */
-import forkfeed from '../src'
+import forkFeed from '../src'
+import { fork } from 'child_process'
 
 (async () => {
-  const res = await forkfeed({
-    text: 'example',
-  })
-  console.log(res)
+  const cp = fork('example/fork', [], { stdio: 'pipe' })
+  forkFeed(cp.stderr, cp.stdin, [
+    [/coach/, 'Gimme my quarter back!!!'],
+    [/snowmen/, 'Just chilling.'],
+  ], process.stdout)
 })()
