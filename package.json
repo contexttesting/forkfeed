@@ -1,7 +1,7 @@
 {
   "name": "forkfeed",
   "version": "0.0.0",
-  "description": "Passes answer values to a child process on data.",
+  "description": "Passes Answer Values To A Child Process On Data.",
   "main": "build",
   "scripts": {
     "t": "zoroaster -a",
@@ -27,7 +27,19 @@
     "url": "git://github.com/artdecocode/forkfeed.git"
   },
   "keywords": [
-    "forkfeed"
+    "forkfeed",
+    "fork",
+    "child_process",
+    "child process",
+    "spawn",
+    "stdout",
+    "stderr",
+    "stdin",
+    "data",
+    "write",
+    "pass",
+    "readline",
+    "interact"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
