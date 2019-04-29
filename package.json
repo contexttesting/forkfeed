@@ -2,7 +2,8 @@
   "name": "forkfeed",
   "version": "1.0.0",
   "description": "Passes Answer Values To A Child Process On Data.",
-  "main": "build",
+  "main": "build/index.js",
+  "module": "src/index.js",
   "scripts": {
     "t": "zoroaster -a",
     "test": "yarn t test/spec test/mask",
@@ -10,7 +11,7 @@
     "mask": "yarn t test/mask",
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
-    "doc": "NODE_DEBUG=doc doc documentary -o README.md",
+    "doc": "NODE_DEBUG=doc doc -o README.md",
     "b": "alamode src -o build",
     "d": "yarn-s d1 externs",
     "d1": "typal src -c",
@@ -24,7 +25,6 @@
     "build",
     "externs.js"
   ],
-  "externs": "externs.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/artdecocode/forkfeed.git"
