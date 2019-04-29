@@ -1,6 +1,6 @@
 ## 29 April 2019
 
-### [1.1.0](https://github.com/artdecocode/forkfeed/compare/v1.0.0...v1.1.0)
+### [1.1.0](https://github.com/contexttesting/forkfeed/compare/v1.0.0...v1.1.0)
 
 - [package] Publish the `module` field in _package.json_.
 - [types] Correct types for the _GCC_.

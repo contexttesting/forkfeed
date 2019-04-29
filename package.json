@@ -23,11 +23,12 @@
   },
   "files": [
     "build",
-    "externs.js"
+    "externs.js",
+    "src"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/artdecocode/forkfeed.git"
+    "url": "git://github.com/contexttesting/forkfeed.git"
   },
   "keywords": [
     "forkfeed",
@@ -47,9 +48,9 @@
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/artdecocode/forkfeed/issues"
+    "url": "https://github.com/contexttesting/forkfeed/issues"
   },
-  "homepage": "https://github.com/artdecocode/forkfeed#readme",
+  "homepage": "https://github.com/contexttesting/forkfeed#readme",
   "devDependencies": {
     "alamode": "2.0.0",
     "documentary": "1.26.2",
