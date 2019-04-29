@@ -29,8 +29,10 @@ export default forkFeed
 
 /* documentary types/index.xml */
 /**
- * @typedef {import('stream').Writable} Writable
- * @typedef {import('stream').Readable} Readable
- *
-
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('stream').Writable} stream.Writable
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('stream').Readable} stream.Readable
  */

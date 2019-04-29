@@ -31,9 +31,9 @@ import forkFeed from 'forkfeed'
 
 Sets up a listener on the _Readable_ stream and writes answers to the _Writable_ stream when data specified in `inputs` was detected. The logging stream will receive both data and answers.
 
-`import('stream').Writable` __<a name="type-writable">`Writable`</a>__
+`import('stream').Writable` __<a name="type-streamwritable">`stream.Writable`</a>__
 
-`import('stream').Readable` __<a name="type-readable">`Readable`</a>__
+`import('stream').Readable` __<a name="type-streamreadable">`stream.Readable`</a>__
 
 Given a fork source code as
 
@@ -79,8 +79,8 @@ What do snowmen do in their spare time?
 
 ## Copyright
 
-(c) [Art Deco][1] 2018
 
-[1]: https://artdeco.bz
+  (c) [Context Testing](https://contexttesting.com) 2019
+
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>

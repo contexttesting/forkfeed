@@ -23,11 +23,11 @@ Sets up a listener on the _Readable_ stream and writes answers to the _Writable_
 
 Given a fork source code as
 
-%EXAMPLE: example/fork.js%
+%EXAMPLE: example/fork%
 
 The function can be used in the following manner:
 
-%EXAMPLE: example/example.js, ../src => forkFeed%
-%FORK example example/example%
+%EXAMPLE: example, ../src => forkFeed%
+%FORK example%
 
 %~%
