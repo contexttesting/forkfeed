@@ -1,6 +1,6 @@
 {
   "name": "forkfeed",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Passes Answer Values To A Child Process On Data.",
   "main": "build/index.js",
   "module": "src/index.js",
